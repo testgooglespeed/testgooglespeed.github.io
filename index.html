@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TikTok Video Embed</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .video-embed {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 605px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+<h1>TikTok Video Information</h1>
+<div id="videoInfo"></div>
+<img id="thumbnail" src="" alt="Thumbnail">
+<div class="video-embed" id="videoEmbed"></div>
+
+<script>
+// Function to fetch TikTok oEmbed data and display it
+function fetchTikTokData() {
+  // The oEmbed endpoint and the TikTok video URL
+  const apiUrl = 'https://www.tiktok.com/oembed?url=https://www.tiktok.com/@itjome168/video/7307945762082639109';
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      displayVideoInfo(data);
+      displayThumbnail(data);
+      displayVideoEmbed(data);
+    })
+    .catch(error => console.error('Error fetching data:', error));
+}
+
+// Function to display video information
+function displayVideoInfo(data) {
+  const infoElement = document.getElementById('videoInfo');
+  infoElement.innerHTML = `<strong>Title:</strong> ${data.title}<br>
+                           <strong>Author:</strong> <a href="${data.author_url}" target="_blank">${data.author_name}</a>`;
+}
+
+// Function to display thumbnail
+function displayThumbnail(data) {
+  const thumbnail = document.getElementById('thumbnail');
+  thumbnail.src = data.thumbnail_url;
+  thumbnail.alt = `Thumbnail of ${data.title}`;
+  thumbnail.style.width = `${data.thumbnail_width}px`;
+  thumbnail.style.height = `${data.thumbnail_height}px`;
+}
+
+// Function to display embedded video
+function displayVideoEmbed(data) {
+  const embedElement = document.getElementById('videoEmbed');
+  embedElement.innerHTML = data.html;
+}
+
+// Call the function to fetch and display the data
+fetchTikTokData();
+</script>
+</body>
+</html>
